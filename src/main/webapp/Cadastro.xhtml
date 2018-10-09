@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/template.xhtml">
+
+	<ui:define name="content">
+		<center>
+			<h:form id="Formlivro">
+
+				<h1 align="center" style="color: #0431B4">Inserir | Alterar |
+					Excluir</h1>
+				<br />
+				<h:messages />
+				<h:panelGrid>
+					<div style="margin: 10%">
+						<p:growl id="growl" life="2000" />
+						<h:inputHidden value="#{livroController.livrodto.id}" />
+						<div>
+							<p:outputLabel for="titulo" value="Título*:" /> 
+							<p:inputText id="titulo" value="#{livroController.livrodto.titulo}" />
+							<p:message for="titulo" style="color: red" >
+								<p:autoUpdate/>
+							</p:message>
+						</div>
+
+						<div> 
+							<p:outputLabel for="data" value="Data de publicação*:" /> 
+							<p:calendar id="data" value="#{livroController.livrodto.dataPublicacao}" pattern="dd-MM-yyyy" mask="true" />
+							<p:message for="data" style="color: red" >
+								<p:autoUpdate/>
+							</p:message>
+						</div>
+						
+						<div>
+				    		<p:outputLabel for="autor" value="Autor*: " /> 
+				    			
+				    		<p:selectOneMenu id="autor" value="#{livroController.livrodto.id_autor}">
+					    		<f:selectItem itemValue="" itemLabel="Selecione" />
+					    		<f:selectItems value="#{livroController.listarAutor}" var="autor" itemValue="#{autor.id}" itemLabel="#{autor.nome}" />
+				    		</p:selectOneMenu>
+	    			        <div>
+			    				<p:message for="autor" style="color: red">
+			    				<p:autoUpdate/>
+		    				  	</p:message>
+	  				       </div>
+	    				</div>
+						
+						<div>
+				    		<p:outputLabel for="categoria" value="Categoria*: " /> 
+				    			
+				    		<p:selectOneMenu id="categoria" value="#{livroController.livrodto.id_categoria}">
+					    		<f:selectItem itemValue="" itemLabel="Selecione" />
+					    		<f:selectItems value="#{livroController.listarCategoria}" var="categoria" itemValue="#{categoria.id}" itemLabel="#{categoria.descricao}" />
+				    		</p:selectOneMenu>
+	    			        <div>
+			    				<p:message for="categoria" style="color: red">
+			    				<p:autoUpdate/>
+		    				  	</p:message>
+	  				       </div>
+	    				</div>
+	    				<br/>
+					</div>
+				</h:panelGrid>
+
+				<div>
+					<p:commandButton update="growl,Formlivro" icon="ui-icon-disk"
+						value="Salvar" action="#{livroController.salvar}" />
+					<p:commandButton value="Excluir"
+						action="#{livroController.excluir(livroController.livrodto.id)}" />
+				</div>
+
+
+
+
+			</h:form>
+		</center>
+	</ui:define>
+</ui:composition>
+</html>
